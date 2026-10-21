@@ -1,6 +1,6 @@
 package jp.pao2pao2.pure_lisp.obj;
 
-public class LispSymbol implements LispObj {
+public final class LispSymbol implements LispObj {
     
     public static final LispObj NIL = new LispSymbol("nil");
     

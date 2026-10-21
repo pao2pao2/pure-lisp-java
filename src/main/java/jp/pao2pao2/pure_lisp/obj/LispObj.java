@@ -1,6 +1,7 @@
 package jp.pao2pao2.pure_lisp.obj;
 
-interface LispObj {
+sealed interface LispObj 
+        permits LispSymbol, LispCons {
 
     default LispObj car() {
         throw new UnsupportedOperationException("car");

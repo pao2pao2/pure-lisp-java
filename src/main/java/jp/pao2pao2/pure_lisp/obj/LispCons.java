@@ -1,6 +1,6 @@
 package jp.pao2pao2.pure_lisp.obj;
 
-public class LispCons implements LispObj {
+public final class LispCons implements LispObj {
     
     private final LispObj car;
     private final LispObj cdr;
