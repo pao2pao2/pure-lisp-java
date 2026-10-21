@@ -24,5 +24,39 @@ class LispObjTest {
     void nilIsNil() {
         assertTrue(LispSymbol.NIL.isNil());
     }
+    
+    @Test
+    void consCarCdr() {
+        LispObj a = new LispSymbol("a");
+        LispObj b = new LispSymbol("b");
+        LispObj tail = new LispCons(b, LispSymbol.NIL);
+        LispObj list = new LispCons(a, tail);
+        
+        assertSame(a, list.car());
+        assertSame(tail, list.cdr());
+        assertSame(b, list.cdr().car());
+        assertSame(LispSymbol.NIL, list.cdr().cdr());
+    }
+    
+    @Test
+    void consToStringAsList() {
+        LispObj list1 = new LispCons(
+                new LispSymbol("a"),
+                new LispCons(
+                    new LispSymbol("b"),
+                    LispSymbol.NIL
+                )
+        );
+        LispObj list2 = new LispCons(
+                new LispSymbol("c"),
+                new LispCons(
+                        new LispSymbol("d"),
+                        LispSymbol.NIL
+                        )
+                );
+        
+        assertEquals("(a b)", list1.toString());
+        assertEquals("(c d)", list2.toString());
+    }
 
 }

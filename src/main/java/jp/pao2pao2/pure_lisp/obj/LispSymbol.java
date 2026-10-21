@@ -4,7 +4,7 @@ public class LispSymbol extends LispObj {
     
     public static final LispObj NIL = new LispSymbol("nil");
     
-    private String name;
+    private final String name;
     
     public LispSymbol(String name) {
         this.name = name;
