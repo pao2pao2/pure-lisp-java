@@ -26,11 +26,16 @@ class LispObjTest {
     }
     
     @Test
+    void tIsT() {
+        assertTrue(LispSymbol.T.isT());
+    }
+    
+    @Test
     void consIsNotAtom() {
         LispObj cons = new LispCons(
                 new LispSymbol("a"),
                 LispSymbol.NIL
-                );
+        );
         
         assertFalse(cons.isAtom());
     }

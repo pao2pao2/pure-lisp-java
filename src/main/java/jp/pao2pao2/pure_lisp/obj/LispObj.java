@@ -18,4 +18,8 @@ sealed interface LispObj
     default boolean isNil() {
         return false;
     }
+    
+    default boolean isT() {
+        return false;
+    }
 }

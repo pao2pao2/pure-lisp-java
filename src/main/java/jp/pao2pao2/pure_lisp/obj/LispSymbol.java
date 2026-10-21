@@ -4,6 +4,8 @@ public final class LispSymbol implements LispObj {
     
     public static final LispObj NIL = new LispSymbol("nil");
     
+    public static final LispObj T = new LispSymbol("t");
+    
     private final String name;
     
     public LispSymbol(String name) {
@@ -18,6 +20,11 @@ public final class LispSymbol implements LispObj {
     @Override
     public boolean isNil() {
         return this == NIL;
+    }
+    
+    @Override
+    public boolean isT() {
+        return this == T;
     }
     
     @Override
