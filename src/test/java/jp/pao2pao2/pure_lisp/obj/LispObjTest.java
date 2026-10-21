@@ -26,6 +26,28 @@ class LispObjTest {
     }
     
     @Test
+    void consIsNotAtom() {
+        LispObj cons = new LispCons(
+                new LispSymbol("a"),
+                LispSymbol.NIL
+                );
+        
+        assertFalse(cons.isAtom());
+    }
+    
+    @Test
+    void symbolIsAtom() {
+        LispObj sym = new LispSymbol("a");
+        
+        assertTrue(sym.isAtom());
+    }
+    
+    @Test
+    void nilIsAtom() {
+        assertTrue(LispSymbol.NIL.isAtom());
+    }
+    
+    @Test
     void consCarCdr() {
         LispObj a = new LispSymbol("a");
         LispObj b = new LispSymbol("b");
