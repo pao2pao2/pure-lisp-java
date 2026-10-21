@@ -58,5 +58,24 @@ class LispObjTest {
         assertEquals("(a b)", list1.toString());
         assertEquals("(c d)", list2.toString());
     }
+    
+    @Test
+    void consToStringAsNestedList() {
+        LispObj list = new LispCons(
+                new LispSymbol("a"),
+                new LispCons(
+                        new LispCons(
+                            new LispSymbol("b"),
+                            new LispCons(
+                                    new LispSymbol("c"),
+                                    LispSymbol.NIL
+                            )
+                        ),
+                        LispSymbol.NIL
+                )
+        );
+        
+        assertEquals("(a (b c))", list.toString());
+    }
 
 }
