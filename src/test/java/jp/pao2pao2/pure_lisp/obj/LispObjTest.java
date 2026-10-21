@@ -137,4 +137,19 @@ class LispObjTest {
         );
     }
     
+    @Test
+    void consRejectNullCar() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new LispCons(null, LispSymbol.NIL)
+        );
+    }
+    
+    @Test
+    void consRejectNullCdr() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new LispCons(LispSymbol.NIL, null)
+        );
+    }
 }
