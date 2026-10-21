@@ -1,6 +1,6 @@
 package jp.pao2pao2.pure_lisp.obj;
 
-sealed interface LispObj 
+public sealed interface LispObj 
         permits LispSymbol, LispCons {
 
     default LispObj car() {
