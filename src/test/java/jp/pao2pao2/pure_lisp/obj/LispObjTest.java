@@ -14,5 +14,15 @@ class LispObjTest {
         assertEquals("a", obj1.toString());
         assertEquals("b", obj2.toString());
     }
+    
+    @Test
+    void nilToString() {
+        assertEquals("nil", LispSymbol.NIL.toString());
+    }
+    
+    @Test
+    void nilIsNil() {
+        assertTrue(LispSymbol.NIL.isNil());
+    }
 
 }
