@@ -115,4 +115,26 @@ class LispObjTest {
         assertEquals("(a . b)", pair.toString());
     }
     
+    @Test
+    void symReturnsName() {
+        LispObj obj1 = new LispSymbol("a");
+        LispObj obj2 = new LispSymbol("b");
+        
+        assertEquals("a", obj1.sym());
+        assertEquals("b", obj2.sym());
+    }
+    
+    @Test
+    void symThrowsOnCons() {
+        LispObj obj = new LispCons(
+                new LispSymbol("a"),
+                LispSymbol.NIL
+        );
+        
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> obj.sym()
+        );
+    }
+    
 }

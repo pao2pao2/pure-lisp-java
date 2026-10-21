@@ -13,6 +13,11 @@ public final class LispSymbol implements LispObj {
     }
     
     @Override
+    public String sym() {
+        return name;
+    }
+    
+    @Override
     public boolean isAtom() {
         return true;
     }

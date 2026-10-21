@@ -22,4 +22,10 @@ sealed interface LispObj
     default boolean isT() {
         return false;
     }
+    
+    default String sym() {
+        throw new UnsupportedOperationException(
+                "not a symbol"
+        );
+    }
 }
