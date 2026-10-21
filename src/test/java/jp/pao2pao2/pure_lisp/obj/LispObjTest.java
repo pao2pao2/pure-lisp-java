@@ -43,8 +43,8 @@ class LispObjTest {
         LispObj list1 = new LispCons(
                 new LispSymbol("a"),
                 new LispCons(
-                    new LispSymbol("b"),
-                    LispSymbol.NIL
+                        new LispSymbol("b"),
+                        LispSymbol.NIL
                 )
         );
         LispObj list2 = new LispCons(
@@ -52,8 +52,8 @@ class LispObjTest {
                 new LispCons(
                         new LispSymbol("d"),
                         LispSymbol.NIL
-                        )
-                );
+                )
+        );
         
         assertEquals("(a b)", list1.toString());
         assertEquals("(c d)", list2.toString());

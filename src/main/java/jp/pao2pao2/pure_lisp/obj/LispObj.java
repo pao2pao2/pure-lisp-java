@@ -1,16 +1,16 @@
 package jp.pao2pao2.pure_lisp.obj;
 
-public class LispObj {
+interface LispObj {
 
-    public LispObj car() {
+    default LispObj car() {
         throw new UnsupportedOperationException("car");
     }
     
-    public LispObj cdr() {
+    default LispObj cdr() {
         throw new UnsupportedOperationException("cdr");
     }
     
-    public boolean isNil() {
+    default boolean isNil() {
         return false;
     }
 }
