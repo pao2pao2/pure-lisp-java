@@ -1,5 +1,7 @@
 package jp.pao2pao2.pure_lisp.obj;
 
+import java.util.Objects;
+
 public final class LispSymbol implements LispObj {
     
     public static final LispObj NIL = new LispSymbol("nil");
@@ -9,7 +11,10 @@ public final class LispSymbol implements LispObj {
     private final String name;
     
     public LispSymbol(String name) {
-        this.name = name;
+        this.name = Objects.requireNonNull(
+                name,
+                "symbol name must not be null"
+        );
     }
     
     @Override

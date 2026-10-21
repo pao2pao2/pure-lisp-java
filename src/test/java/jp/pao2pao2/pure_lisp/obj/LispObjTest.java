@@ -152,4 +152,12 @@ class LispObjTest {
                 () -> new LispCons(LispSymbol.NIL, null)
         );
     }
+    
+    @Test
+    void symbolRejectNullName() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new LispSymbol(null)
+        );
+    }
 }
