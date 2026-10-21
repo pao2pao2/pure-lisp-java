@@ -10,6 +10,10 @@ interface LispObj {
         throw new UnsupportedOperationException("cdr");
     }
     
+    default boolean isAtom() {
+        return false;
+    }
+    
     default boolean isNil() {
         return false;
     }

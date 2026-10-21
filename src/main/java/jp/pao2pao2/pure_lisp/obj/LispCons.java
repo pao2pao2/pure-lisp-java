@@ -45,8 +45,14 @@ public class LispCons implements LispObj {
         }
         
         // cdr
-        sb.append(' ');
-        buildListBodyString(sb, obj.cdr());
+        if (obj.cdr().isAtom()) {
+            // dot pair
+            sb.append(" . ");
+            sb.append(obj.cdr().toString());
+        } else {
+            sb.append(' ');
+            buildListBodyString(sb, obj.cdr());
+        }
     }
 
 }

@@ -77,5 +77,15 @@ class LispObjTest {
         
         assertEquals("(a (b c))", list.toString());
     }
-
+    
+    @Test
+    void consToStringAsDotPair() {
+        LispObj pair = new LispCons(
+                new LispSymbol("a"),
+                new LispSymbol("b")
+        );
+        
+        assertEquals("(a . b)", pair.toString());
+    }
+    
 }

@@ -11,6 +11,11 @@ public class LispSymbol implements LispObj {
     }
     
     @Override
+    public boolean isAtom() {
+        return true;
+    }
+    
+    @Override
     public boolean isNil() {
         return this == NIL;
     }
