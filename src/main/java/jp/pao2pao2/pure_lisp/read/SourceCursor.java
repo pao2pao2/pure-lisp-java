@@ -20,4 +20,14 @@ public class SourceCursor {
     public boolean eof() {
         return pos >= source.length();
     }
+    
+    public String getSource() {
+        return source;
+    }
+    
+    public void skipWhitespace() {
+        while (!eof() && Character.isWhitespace(peek())) {
+            next();
+        }
+    }
 }
