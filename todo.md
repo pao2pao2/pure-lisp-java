@@ -9,7 +9,7 @@
 
 ## 実装予定
 
-- [ ] SExprReaderにSourceCursorを導入する
+- [x] SExprReaderにSourceCursorを導入する
 - [ ] リストの読み取りを実装する
 - [ ] ドット対の読み取りを実装する
 

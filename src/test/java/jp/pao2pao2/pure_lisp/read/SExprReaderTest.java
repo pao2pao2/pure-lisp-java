@@ -10,7 +10,6 @@ class SExprReaderTest {
 
     private LispObj read(String source) {
         SExprReader reader = new SExprReader();
-        
         return reader.readExpr(source);
     }
     
@@ -22,5 +21,19 @@ class SExprReaderTest {
                 "a",
                 obj.toString()
         );
+    }
+    
+    @Test
+    void readSymbolAfterLeadingWhitespace() {
+        LispObj obj = read("     a");
+        
+        assertEquals("a", obj.toString());
+    }
+    
+    @Test
+    void readSymbolBeforeTrailingWhitespace() {
+        LispObj obj = read("a   ");
+        
+        assertEquals("a", obj.toString());
     }
 }
