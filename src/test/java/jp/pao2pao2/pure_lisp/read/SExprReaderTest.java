@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import jp.pao2pao2.pure_lisp.obj.LispObj;
+import jp.pao2pao2.pure_lisp.obj.LispSymbol;
 
 class SExprReaderTest {
 
@@ -51,5 +52,36 @@ class SExprReaderTest {
                 IllegalArgumentException.class,
                 () -> read("   ")
         );
+    }
+    
+    @Test
+    void readEmptyListReturnsNil() {
+        LispObj obj = read("()");
+        
+        assertSame(LispSymbol.NIL, obj);
+    }
+    
+    @Test
+    void readSingleElementList() {
+        LispObj obj = read("(a)");
+        
+        assertEquals("(a)", obj.toString());
+    }
+    
+    @Test
+    void readSingleElementListWithDifferentSymbol() {
+        LispObj obj = read("(b)");
+        
+        assertEquals("(b)", obj.toString());
+    }
+    
+    @Test
+    void readSingleElementListConsumesClosingParen() {
+        SourceCursor cursor = new SourceCursor("(a)");
+        SExprReader reader = new SExprReader();
+        
+        reader.readExpr(cursor);
+        
+        assertTrue(cursor.eof());
     }
 }
