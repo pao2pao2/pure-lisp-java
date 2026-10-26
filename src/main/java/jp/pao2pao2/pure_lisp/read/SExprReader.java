@@ -14,6 +14,12 @@ public class SExprReader {
         
         cursor.skipWhitespace();
         
+        if (cursor.eof()) {
+            throw new IllegalArgumentException(
+                    "no expression to read"
+            );
+        }
+        
         while (!cursor.eof()
                 && !Character.isWhitespace(cursor.peek())) {
             sb.append(cursor.next());

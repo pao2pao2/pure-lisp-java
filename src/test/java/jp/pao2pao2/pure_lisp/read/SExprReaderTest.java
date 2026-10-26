@@ -36,4 +36,20 @@ class SExprReaderTest {
         
         assertEquals("a", obj.toString());
     }
+    
+    @Test
+    void readRejectsEmptySource() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> read("")
+        );
+    }
+    
+    @Test
+    void readRejectsWhitespaceOnlySource() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> read("   ")
+        );
+    }
 }
