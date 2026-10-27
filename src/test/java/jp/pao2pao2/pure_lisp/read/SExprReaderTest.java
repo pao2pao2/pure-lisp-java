@@ -112,4 +112,28 @@ class SExprReaderTest {
         
         assertEquals("(a (b c))", obj.toString());
     }
+    
+    @Test
+    void readRejectsUnexpectedClosingParen() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> read(")")
+        );
+    }
+    
+    @Test
+    void readRejectsUnterminatedList() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> read("(a")
+        );
+    }
+    
+    @Test
+    void readRejectsUnterminatedEmptyList() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> read("(")
+        );
+    }
 }

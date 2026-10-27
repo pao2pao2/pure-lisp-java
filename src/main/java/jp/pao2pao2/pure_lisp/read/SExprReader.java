@@ -20,6 +20,12 @@ public class SExprReader {
             );
         }
         
+        if (cursor.peek() == ')') {
+            throw new IllegalArgumentException(
+                    "unexpected ')'"
+            );
+        }
+        
         if (cursor.peek() != '(') {
             return readSymbol(cursor);
         }
@@ -54,6 +60,12 @@ public class SExprReader {
     
     private LispObj readListBody(SourceCursor cursor) {
         cursor.skipWhitespace();
+        
+        if (cursor.eof()) {
+            throw new IllegalArgumentException(
+                    "unexpected EOF"
+            );
+        }
         
         if (cursor.peek() == ')') {
             cursor.next();
