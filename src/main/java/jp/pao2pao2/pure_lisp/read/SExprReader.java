@@ -38,6 +38,7 @@ public class SExprReader {
         
         while (!cursor.eof()
                 && !Character.isWhitespace(cursor.peek())
+                && cursor.peek() != '('
                 && cursor.peek() != ')') {
             sb.append(cursor.next());
         }
@@ -52,6 +53,8 @@ public class SExprReader {
     }
     
     private LispObj readListBody(SourceCursor cursor) {
+        cursor.skipWhitespace();
+        
         if (cursor.peek() == ')') {
             cursor.next();
             return LispSymbol.NIL;

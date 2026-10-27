@@ -84,4 +84,32 @@ class SExprReaderTest {
         
         assertTrue(cursor.eof());
     }
+    
+    @Test
+    void readTwoElementList() {
+        LispObj obj = read("(a b)");
+        
+        assertEquals("(a b)", obj.toString());
+    }
+    
+    @Test
+    void readSingleElementListWithTrailingWhitespace() {
+        LispObj obj = read("(a )");
+        
+        assertEquals("(a)", obj.toString());
+    }
+    
+    @Test
+    void readNestedList() {
+        LispObj obj = read("(a (b c))");
+        
+        assertEquals("(a (b c))", obj.toString());
+    }
+    
+    @Test
+    void readNestedListWithoutWhitespace() {
+        LispObj obj = read("(a(b c))");
+        
+        assertEquals("(a (b c))", obj.toString());
+    }
 }
