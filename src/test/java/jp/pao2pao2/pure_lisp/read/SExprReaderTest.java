@@ -136,4 +136,11 @@ class SExprReaderTest {
                 () -> read("(")
         );
     }
+    
+    @Test
+    void readListWithTabsAndNewlines() {
+        LispObj obj = read("(a\tb\nc)");
+        
+        assertEquals("(a b c)", obj.toString());
+    }
 }
