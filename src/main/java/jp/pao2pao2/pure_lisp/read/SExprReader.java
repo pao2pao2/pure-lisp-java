@@ -74,6 +74,34 @@ public class SExprReader {
         
         LispObj obj = readExpr(cursor);
         
+        cursor.skipWhitespace();
+        
+        if (!cursor.eof() && cursor.peek() == '.') {
+            return readDottedPair(cursor, obj);
+        }
+        
         return new LispCons(obj, readListBody(cursor));
+    }
+    
+    private LispObj readDottedPair(
+            SourceCursor cursor,
+            LispObj car) {
+        
+        cursor.next();
+        cursor.skipWhitespace();
+        
+        LispObj cdr = readExpr(cursor);
+        
+        cursor.skipWhitespace();
+        
+        if (cursor.eof() || cursor.peek() != ')') {
+            throw new IllegalArgumentException(
+                    "expected ')' after dotted pair"
+            );
+        }
+        
+        cursor.next();
+        
+        return new LispCons(car, cdr);
     }
 }

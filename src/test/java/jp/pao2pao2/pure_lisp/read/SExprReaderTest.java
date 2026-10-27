@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import jp.pao2pao2.pure_lisp.obj.LispCons;
 import jp.pao2pao2.pure_lisp.obj.LispObj;
 import jp.pao2pao2.pure_lisp.obj.LispSymbol;
 
@@ -142,5 +143,37 @@ class SExprReaderTest {
         LispObj obj = read("(a\tb\nc)");
         
         assertEquals("(a b c)", obj.toString());
+    }
+    
+    @Test
+    void readDottedPair() {
+        LispCons pair = assertInstanceOf(
+                LispCons.class,
+                read("(a . b)")
+        );
+        
+        LispSymbol cdr = assertInstanceOf(
+                LispSymbol.class,
+                pair.cdr()
+        );
+        
+        assertEquals("a", pair.car().sym());
+        assertEquals("b", cdr.sym());
+    }
+    
+    @Test
+    void readRejectsUnterminatedDottedPair() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> read("(a . b")
+        );
+    }
+    
+    @Test
+    void readRejectsExtraElementAfterDot() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> read("(a . b c)")
+        );
     }
 }
