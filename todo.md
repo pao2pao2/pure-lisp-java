@@ -21,7 +21,7 @@
 
 ### EVAL
 
-- [ ] quote
+- [x] quote
 - [ ] car
 - [ ] cdr
 - [ ] atom
