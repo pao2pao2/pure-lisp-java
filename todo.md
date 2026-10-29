@@ -11,10 +11,20 @@
 
 ## 実装予定
 
+### READ
+
 - [x] SExprReaderにSourceCursorを導入する
 - [x] READで空入力および空白だけの入力を拒絶する
 - [x] リストの読み取りを実装する
 - [x] ドット対の読み取りを実装する
+
+### EVAL
+
+- [ ] quote
+- [ ] car
+- [ ] cdr
+- [ ] atom
+- [ ] eq
 
 ## 後で検討
 
