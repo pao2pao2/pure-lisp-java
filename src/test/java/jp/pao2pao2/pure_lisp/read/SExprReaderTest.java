@@ -176,4 +176,16 @@ class SExprReaderTest {
                 () -> read("(a . b c)")
         );
     }
+    
+    @Test
+    void readDottedPairWithListCdr() {
+        LispCons pair = assertInstanceOf(
+                LispCons.class,
+                read("(a . (b c))")
+        );
+     
+        assertEquals("a", pair.car().sym());
+        assertInstanceOf(LispCons.class, pair.cdr());
+        assertEquals("(a b c)", pair.toString());
+    }
 }
