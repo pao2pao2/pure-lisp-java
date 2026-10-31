@@ -59,5 +59,48 @@ class EvaluatorTest {
         assertSame(expr.cdr().car(), result.value());
         assertSame(env, result.env());
     }
+    
+    @Test
+    void evalCar() {
+        LispObj expr = read("(car (quote (a b)))");
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        assertEquals("a", result.value().sym());
+        assertSame(env, result.env());
+    }
 
+    @Test
+    void evalCarWithDifferentSymbol() {
+        LispObj expr = read("(car (quote (b c)))");
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        assertEquals("b", result.value().sym());
+        assertSame(env, result.env());
+    }
+    
+    @Test
+    void evalCarRejectsTooManyArguments() {
+        LispObj expr = read("(car (quote (a b)) (quote (c d)))");
+        LispObj env = LispSymbol.NIL;
+        
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Evaluator().eval(expr, env)
+        );
+    }
+    
+    @Test
+    void evalCarRejectsNoArguments() {
+        LispObj expr = read("(car)");
+        LispObj env = LispSymbol.NIL;
+        
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Evaluator().eval(expr, env)
+        );
+    }
 }

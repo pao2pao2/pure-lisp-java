@@ -7,10 +7,16 @@ public class Evaluator {
     
     private static final LispSymbol QUOTE =
             new LispSymbol("quote");
+    private static final LispSymbol CAR =
+            new LispSymbol("car");
     
     public EvalResult eval(LispObj expr, LispObj env) { 
         if (!expr.isAtom() && eq(expr.car(), QUOTE)) {
             return evalQuote(expr, env);
+        }
+        
+        if (!expr.isAtom() && eq(expr.car(), CAR)) {
+            return evalCar(expr, env);
         }
         
         return new EvalResult(expr, env);
@@ -29,5 +35,24 @@ public class Evaluator {
                 expr.cdr().car(),
                 env
         ); 
+    }
+    
+    private EvalResult evalCar(LispObj expr, LispObj env) {
+        LispObj args = expr.cdr();
+        
+        if (args.isNil() || !args.cdr().isNil()) {
+            throw new IllegalArgumentException(
+                    "car expects exactly one argument"
+            );
+        }
+        
+        LispObj arg = args.car();
+        
+        EvalResult result = eval(arg, env);
+        
+        return new EvalResult(
+                result.value().car(),
+                env
+        );
     }
 }
