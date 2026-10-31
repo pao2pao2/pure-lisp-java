@@ -24,9 +24,10 @@
 
 - [x] quote
 - [x] car
-- [ ] cdr
+- [x] cdr
 - [ ] atom
 - [ ] eq
+- [ ] extract single argument validation
 
 ## 後で検討
 

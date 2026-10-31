@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import jp.pao2pao2.pure_lisp.obj.LispCons;
 import jp.pao2pao2.pure_lisp.obj.LispObj;
 import jp.pao2pao2.pure_lisp.obj.LispSymbol;
 import jp.pao2pao2.pure_lisp.read.SExprReader;
@@ -96,6 +97,62 @@ class EvaluatorTest {
     @Test
     void evalCarRejectsNoArguments() {
         LispObj expr = read("(car)");
+        LispObj env = LispSymbol.NIL;
+        
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Evaluator().eval(expr, env)
+        );
+    }
+    
+    @Test
+    void evalCdr() {
+        LispObj expr = read("(cdr (quote (a b)))");
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        LispCons list = assertInstanceOf(
+                LispCons.class,
+                result.value()
+        );
+        
+        assertEquals("b", list.car().sym());
+        assertSame(LispSymbol.NIL, list.cdr());
+        assertSame(env, result.env());
+    }
+    
+    @Test
+    void evalCdrWithDifferentSymbol() {
+        LispObj expr = read("(cdr (quote (a c)))");
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        LispCons list = assertInstanceOf(
+                LispCons.class,
+                result.value()
+        );
+        
+        assertEquals("c", list.car().sym());
+        assertSame(LispSymbol.NIL, list.cdr());
+        assertSame(env, result.env());
+    }
+    
+    @Test
+    void evalCdrRejectsNoArguments() {
+        LispObj expr = read("(cdr)");
+        LispObj env = LispSymbol.NIL;
+        
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Evaluator().eval(expr, env)
+        );
+    }
+    
+    @Test
+    void evalCdrRejectsTooManyArguments() {
+        LispObj expr = read("(cdr (quote (a b)) (quote (c d)))");
         LispObj env = LispSymbol.NIL;
         
         assertThrows(
