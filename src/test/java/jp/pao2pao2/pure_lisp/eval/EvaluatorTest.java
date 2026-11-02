@@ -161,4 +161,59 @@ class EvaluatorTest {
                 () -> new Evaluator().eval(expr, env)
         );
     }
+    
+    @Test
+    void evalAtomForSymbol() {
+        LispObj expr = read("(atom (quote a))");
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        assertSame(LispSymbol.T, result.value());
+        assertSame(env, result.env());
+    }
+    
+    @Test
+    void evalAtomForList() {
+        LispObj expr = read("(atom (quote (a b)))");
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        assertSame(LispSymbol.NIL, result.value());
+        assertSame(env, result.env());
+    }
+    
+    @Test
+    void evalAtomForNil() {
+        LispObj expr = read("(atom (quote ()))");
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        assertSame(LispSymbol.T, result.value());
+        assertSame(env, result.env());
+    }
+    
+    @Test
+    void evalAtomRejectsNoArguments() {
+        LispObj expr = read("(atom)");
+        LispObj env = LispSymbol.NIL;
+        
+        assertThrows(
+                LispEvalException.class,
+                () -> new Evaluator().eval(expr, env)
+        );
+    }
+    
+    @Test
+    void evalAtomRejectsTooManyArguments() {
+        LispObj expr = read("(atom (quote a) (quote b))");
+        LispObj env = LispSymbol.NIL;
+        
+        assertThrows(
+                LispEvalException.class,
+                () -> new Evaluator().eval(expr, env)
+        );
+    }
 }

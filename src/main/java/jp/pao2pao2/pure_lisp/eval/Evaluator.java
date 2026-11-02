@@ -12,10 +12,16 @@ public class Evaluator {
             new LispSymbol("car");
     private static final LispSymbol CDR =
             new LispSymbol("cdr");
+    private static final LispSymbol ATOM =
+            new LispSymbol("atom");
     
     public EvalResult eval(LispObj expr, LispObj env) { 
         if (!expr.isAtom() && eq(expr.car(), QUOTE)) {
             return evalQuote(expr, env);
+        }
+        
+        if (!expr.isAtom() && eq(expr.car(), ATOM)) {
+            return evalAtom(expr, env);
         }
         
         if (!expr.isAtom() && eq(expr.car(), CAR)) {
@@ -42,6 +48,18 @@ public class Evaluator {
                 expr.cdr().car(),
                 env
         ); 
+    }
+    
+    private EvalResult evalAtom(LispObj expr, LispObj env) {
+        LispObj arg = requireSingleArgument(expr, "atom");
+        EvalResult result = eval(arg, env);
+        
+        return new EvalResult(
+                result.value().isAtom()
+                    ? LispSymbol.T
+                    : LispSymbol.NIL,
+                env
+        );
     }
     
     private EvalResult evalCar(LispObj expr, LispObj env) {
