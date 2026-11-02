@@ -44,15 +44,7 @@ public class Evaluator {
     }
     
     private EvalResult evalCar(LispObj expr, LispObj env) {
-        LispObj args = expr.cdr();
-        
-        if (args.isNil() || !args.cdr().isNil()) {
-            throw new IllegalArgumentException(
-                    "car expects exactly one argument"
-            );
-        }
-        
-        LispObj arg = args.car();
+        LispObj arg = requireSingleArgument(expr, "car");
         
         EvalResult result = eval(arg, env);
         
@@ -63,15 +55,7 @@ public class Evaluator {
     }
     
     private EvalResult evalCdr(LispObj expr, LispObj env) {
-        LispObj args = expr.cdr();
-        
-        if (args.isNil() || !args.cdr().isNil()) {
-            throw new IllegalArgumentException(
-                    "cdr expects exactly one argument"
-            );
-        }
-        
-        LispObj arg = args.car();
+        LispObj arg = requireSingleArgument(expr, "cdr");
         
         EvalResult result = eval(arg, env);
         
@@ -79,5 +63,20 @@ public class Evaluator {
                 result.value().cdr(),
                 env
         );
+    }
+    
+    private LispObj requireSingleArgument(
+            LispObj expr,
+            String functionName) {
+        
+        LispObj args = expr.cdr();
+        
+        if (args.isNil() || !args.cdr().isNil()) {
+            throw new IllegalArgumentException(
+                    functionName + " expects exactly one argument"
+            );
+        }
+        
+        return args.car();
     }
 }

@@ -27,7 +27,7 @@
 - [x] cdr
 - [ ] atom
 - [ ] eq
-- [ ] extract single argument validation
+- [x] extract single argument validation
 
 ## 後で検討
 
