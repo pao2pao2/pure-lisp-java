@@ -1,5 +1,6 @@
 package jp.pao2pao2.pure_lisp.eval;
 
+import jp.pao2pao2.pure_lisp.error.LispEvalException;
 import jp.pao2pao2.pure_lisp.obj.LispObj;
 import jp.pao2pao2.pure_lisp.obj.LispSymbol;
 
@@ -72,7 +73,7 @@ public class Evaluator {
         LispObj args = expr.cdr();
         
         if (args.isNil() || !args.cdr().isNil()) {
-            throw new IllegalArgumentException(
+            throw new LispEvalException(
                     functionName + " expects exactly one argument"
             );
         }

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import jp.pao2pao2.pure_lisp.error.LispEvalException;
 import jp.pao2pao2.pure_lisp.obj.LispCons;
 import jp.pao2pao2.pure_lisp.obj.LispObj;
 import jp.pao2pao2.pure_lisp.obj.LispSymbol;
@@ -89,7 +90,7 @@ class EvaluatorTest {
         LispObj env = LispSymbol.NIL;
         
         assertThrows(
-                IllegalArgumentException.class,
+                LispEvalException.class,
                 () -> new Evaluator().eval(expr, env)
         );
     }
@@ -100,7 +101,7 @@ class EvaluatorTest {
         LispObj env = LispSymbol.NIL;
         
         assertThrows(
-                IllegalArgumentException.class,
+                LispEvalException.class,
                 () -> new Evaluator().eval(expr, env)
         );
     }
@@ -145,7 +146,7 @@ class EvaluatorTest {
         LispObj env = LispSymbol.NIL;
         
         assertThrows(
-                IllegalArgumentException.class,
+                LispEvalException.class,
                 () -> new Evaluator().eval(expr, env)
         );
     }
@@ -156,7 +157,7 @@ class EvaluatorTest {
         LispObj env = LispSymbol.NIL;
         
         assertThrows(
-                IllegalArgumentException.class,
+                LispEvalException.class,
                 () -> new Evaluator().eval(expr, env)
         );
     }
