@@ -216,4 +216,89 @@ class EvaluatorTest {
                 () -> new Evaluator().eval(expr, env)
         );
     }
+    
+    @Test
+    void evalEqForSameSymbols() {
+        LispObj expr = read(
+                "(eq (quote a) (quote a))"
+        );
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        assertSame(LispSymbol.T, result.value());
+        assertSame(env, result.env());
+    }
+    
+    @Test
+    void evalEqForDifferentSymbols() {
+        LispObj expr = read(
+                "(eq (quote a) (quote b))"
+        );
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        assertSame(LispSymbol.NIL, result.value());
+        assertSame(env, result.env());
+    }
+    
+    @Test
+    void evalEqRejectsNoArguments() {
+        LispObj expr = read("(eq)");
+        LispObj env = LispSymbol.NIL;
+        
+        assertThrows(
+                LispEvalException.class,
+                () -> new Evaluator().eval(expr, env)
+        );
+    }
+    
+    @Test
+    void evalEqRejectsOneArgument() {
+        LispObj expr = read("(eq (quote a))");
+        LispObj env = LispSymbol.NIL;
+        
+        assertThrows(
+                LispEvalException.class,
+                () -> new Evaluator().eval(expr, env)
+        );
+    }
+    
+    @Test
+    void evalEqRejectsTooManyArguments() {
+        LispObj expr = read(
+                "(eq (quote a) (quote b) (quote c))"
+        );
+        LispObj env = LispSymbol.NIL;
+        
+        assertThrows(
+                LispEvalException.class,
+                () -> new Evaluator().eval(expr, env)
+        );
+    }
+    
+    @Test
+    void evalEqForLists() {
+        LispObj expr = read("(eq (quote (a)) (quote (a)))");
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        assertSame(LispSymbol.NIL, result.value());
+        assertSame(env, result.env());
+    }
+    
+    @Test
+    void evalEqForNil() {
+        LispObj expr = read(
+                "(eq (quote ()) (quote ()))"
+        );
+        LispObj env = LispSymbol.NIL;
+        
+        EvalResult result = new Evaluator().eval(expr, env);
+        
+        assertSame(LispSymbol.T, result.value());
+        assertSame(env, result.env());
+    }
 }

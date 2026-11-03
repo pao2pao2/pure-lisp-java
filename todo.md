@@ -26,7 +26,7 @@
 - [x] car
 - [x] cdr
 - [x] atom
-- [ ] eq
+- [x] eq
 - [x] extract single argument validation
 
 ## 後で検討

@@ -14,6 +14,8 @@ public class Evaluator {
             new LispSymbol("cdr");
     private static final LispSymbol ATOM =
             new LispSymbol("atom");
+    private static final LispSymbol EQ =
+            new LispSymbol("eq");
     
     public EvalResult eval(LispObj expr, LispObj env) { 
         if (!expr.isAtom() && eq(expr.car(), QUOTE)) {
@@ -22,6 +24,10 @@ public class Evaluator {
         
         if (!expr.isAtom() && eq(expr.car(), ATOM)) {
             return evalAtom(expr, env);
+        }
+        
+        if (!expr.isAtom() && eq(expr.car(), EQ)) {
+            return evalEq(expr, env);
         }
         
         if (!expr.isAtom() && eq(expr.car(), CAR)) {
@@ -56,6 +62,20 @@ public class Evaluator {
         
         return new EvalResult(
                 result.value().isAtom()
+                    ? LispSymbol.T
+                    : LispSymbol.NIL,
+                env
+        );
+    }
+    
+    private EvalResult evalEq(LispObj expr, LispObj env) {
+        LispObj args = requireTwoArgument(expr, "eq");
+        
+        EvalResult resultFirst = eval(args.car(), env);
+        EvalResult resultSecond = eval(args.cdr().car(), env);
+        
+        return new EvalResult(
+                eq(resultFirst.value(), resultSecond.value())
                     ? LispSymbol.T
                     : LispSymbol.NIL,
                 env
@@ -97,5 +117,22 @@ public class Evaluator {
         }
         
         return args.car();
+    }
+    
+    private LispObj requireTwoArgument(
+            LispObj expr,
+            String functionName) {
+        
+        LispObj args = expr.cdr();
+        
+        if (args.isNil() ||
+                args.cdr().isNil() ||
+                !args.cdr().cdr().isNil()) {
+            throw new LispEvalException(
+                    functionName + " expects exactly two arguments"
+            );
+        }
+        
+        return args;
     }
 }
